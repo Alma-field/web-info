@@ -15,6 +15,9 @@ def root_page():
     ]
     ipaddress = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     data['ipaddress'] = ['IPアドレス', ipaddress]
+    ip_fowarded = request.environ.get('HTTP_X_FORWARDED_FOR', None)
+    if ip_fowarded is not None:
+        data['ip_fowarded'] = ['IPアドレス(別)', ip_fowarded]
     data['form-type'] = ['FORMタイプ', request.method.upper()]
     data['user-agent'] = ['ブラウザー', request.headers['User-Agent']]
     accept_mime = str(request.headers['Accept'])
