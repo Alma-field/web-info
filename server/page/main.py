@@ -13,7 +13,8 @@ def root_page():
         '取得時刻',
         datetime.now(TIMEZONE).strftime('%Y年%m月%d日 %H時%M分%S秒')
     ]
-    data['ipaddress'] = ['IPアドレス', request.remote_addr]
+    ipaddress = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    data['ipaddress'] = ['IPアドレス', ipaddress]
     data['form-type'] = ['FORMタイプ', request.method.upper()]
     data['user-agent'] = ['ブラウザー', request.headers['User-Agent']]
     accept_mime = str(request.headers['Accept'])
