@@ -16,9 +16,15 @@ def root_page():
     data['ipaddress'] = ['IPアドレス', request.remote_addr]
     data['form-type'] = ['FORMタイプ', request.method.upper()]
     data['user-agent'] = ['ブラウザー', request.headers['User-Agent']]
-    data['accept-mime'] = ['使用するMIME', request.headers['Accept']]
-    data['accept-encoding'] = ['使用するエンコード', request.headers['Accept-Encoding']]
-    data['accept-lang'] = ['使用言語', request.headers['Accept-Language']]
+    accept_mime = str(request.headers['Accept'])
+    #accept_mime = ';<br>'.join(accept_mime.split(';'))+';'
+    data['accept-mime'] = ['使用するMIME', accept_mime]
+    accept_encoding = str(request.headers['Accept-Encoding'])
+    #accept_encoding = ';<br>'.join(accept_encoding.split(';'))+';'
+    data['accept-encoding'] = ['使用するエンコード', accept_encoding]
+    accept_lang = str(request.headers['Accept-Language'])
+    #accept_lang = ';<br>'.join(accept_lang.split(';'))+';'
+    data['accept-lang'] = ['使用言語', accept_lang]
     response = make_response(render_template('root_page.html', data=data))
     return response
 

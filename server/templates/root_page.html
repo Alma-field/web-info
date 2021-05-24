@@ -4,12 +4,12 @@
 {% endblock %}
 {% block body %}
 <h1>クライアントデータ</h1>
-<table border style="max-width: 90%;">
+<table border style="table-layout: fixed;width: 90%;position: static;">
 	<tbody>
 		{% for key in data -%}
 		<tr>
 			<th>{{ data[key][0] }}</th>
-			<td>{{ data[key][1] }}</td>
+			<td style="overflow: scroll;">{{ data[key][1] | safe }}</td>
 		</tr>
 		{%- endfor %}
 	</tbody>
