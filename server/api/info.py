@@ -16,11 +16,28 @@ class IPAddress(Resource):
 
     @api.marshal_with(data)
     def get(self):
-        ipaddress = request.remote_addr
+        ipaddress = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
         data = {
             'code': 200,
             'type': 'ipaddress',
             'value': ipaddress
+        }
+        return data
+
+@api.route(
+    '/useragent',
+    doc={'description': 'クライアントのユーザーエージェントを返却します。'}
+)
+class UserAgent(Resource):
+    """UserAgent"""
+
+    @api.marshal_with(data)
+    def get(self):
+        user_agent = request.headers['User-Agent']
+        data = {
+            'code': 200,
+            'type': 'user-agent',
+            'value': user_agent
         }
         return data
 
