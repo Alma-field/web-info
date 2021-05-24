@@ -21,6 +21,9 @@ class ReverseProxied(object):
             environ['wsgi.url_scheme'] = scheme
         return self.app(environ, start_response)
 
+from server import setup_app
+app = setup_app()
+
 if __name__ == '__main__':
     from argparse import ArgumentParser
     arg_parser = ArgumentParser(
@@ -30,7 +33,5 @@ if __name__ == '__main__':
     arg_parser.add_argument('-p', '--port', type=int, default=5000)
     arg_parser.add_argument('-d', '--debug', action='store_true')
     options = arg_parser.parse_args()
-    from server import setup_app
-    app = setup_app()
     app.wsgi_app = ReverseProxied(app.wsgi_app)
     app.run(host=options.host, port=options.port, debug=options.debug)
