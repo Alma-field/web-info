@@ -13,11 +13,11 @@ def root_page():
         '取得時刻',
         datetime.now(TIMEZONE).strftime('%Y年%m月%d日 %H時%M分%S秒')
     ]
-    ipaddress = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    data['ipaddress'] = ['IPアドレス', ipaddress]
+    ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    data['ip_address'] = ['IPアドレス', ip_address]
     ip_fowarded = request.environ.get('HTTP_X_FORWARDED_FOR', None)
     if ip_fowarded is not None:
-        data['ip_fowarded'] = ['IPアドレス(別)', ip_fowarded]
+        data['ip_address'][1] = ip_fowarded
     data['form-type'] = ['FORMタイプ', request.method.upper()]
     data['user-agent'] = ['ブラウザー', request.headers['User-Agent']]
     accept_mime = str(request.headers['Accept'])

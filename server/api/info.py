@@ -16,11 +16,14 @@ class IPAddress(Resource):
 
     @api.marshal_with(data)
     def get(self):
-        ipaddress = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        ip_fowarded = request.environ.get('HTTP_X_FORWARDED_FOR', None)
+        if ip_fowarded is not None:
+            ip_address = ip_fowarded
         data = {
             'code': 200,
             'type': 'ipaddress',
-            'value': ipaddress
+            'value': ip_address
         }
         return data
 
